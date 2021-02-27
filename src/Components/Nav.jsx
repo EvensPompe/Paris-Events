@@ -1,11 +1,12 @@
-function Nav(){
+import { Link } from "react-router-dom";
+function Nav() {
     return (
-        <div className="w-3/4 bg-blue-200 text-4xl">
+        <div className="w-3/4 text-4xl">
             <ul className="flex flex-row h-full">
-                <li className="flex-1  flex items-center justify-center h-full cursor-pointer"><a href="#">Accueil</a></li>
-                <li className="flex-1  flex items-center justify-center h-full cursor-pointer"><a href="#">Inscription</a></li>
-                <li className="flex-1  flex items-center justify-center h-full cursor-pointer"><a href="#">Connexion</a></li>
-            </ul> 
+                <li className="flex-1  flex items-center justify-center h-full cursor-pointer"><Link to="/">Accueil</Link></li>
+                <li className="flex-1  flex items-center justify-center h-full cursor-pointer"> <Link to="/register">Inscription</Link></li>
+                <li className="flex-1  flex items-center justify-center h-full cursor-pointer"><Link to="/login">Connexion</Link></li>
+            </ul>
         </div>
     );
 }
