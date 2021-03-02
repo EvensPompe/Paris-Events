@@ -1,4 +1,6 @@
 import React,{useState} from "react";
+import { auth } from "../firebase";
+
 export default function Register() {
     const [email,setEmail] = useState(""),
           [password,setPassword] = useState(""),
@@ -7,11 +9,13 @@ export default function Register() {
     const sendRegister = (e) =>{
         e.preventDefault();
         if(password === confPassword){
-            console.log("ok")
+            auth.createUserWithEmailAndPassword(email,password)
+            .then((userCredential)=>{
+                console.log(userCredential)
+            }).catch(console.error)
         }else{
             console.log("not ok")
         }
-        console.log(email,password,confPassword)
     }
     return (
         <div id="register" className="w-screen h-full flex flex-col flex-nowrap">
