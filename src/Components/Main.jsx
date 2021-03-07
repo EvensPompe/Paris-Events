@@ -2,6 +2,7 @@ import "./Main.css";
 import Home from "../Views/Home";
 import Register from "../Views/Register";
 import Login from "../Views/Login";
+import Search from "../Views/Search";
 import { Switch, Route } from "react-router-dom";
 function Main() {
     return (
@@ -9,6 +10,9 @@ function Main() {
             <Switch>
                 <Route exact path="/">
                     <Home/>
+                </Route>
+                <Route path="/search">
+                    <Search/>
                 </Route>
                 <Route path="/register">
                     <Register/>

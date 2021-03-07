@@ -1,27 +1,54 @@
 import React,{useState} from "react";
 import { auth } from "../firebase";
+import Error from "../Components/Messages/Error";
+import Success from "../Components/Messages/Success";
 
 export default function Register() {
     const [email,setEmail] = useState(""),
           [password,setPassword] = useState(""),
-          [confPassword,setConfPassword] = useState("");
-
+          [confPassword,setConfPassword] = useState(""),
+          [type,setype] = useState("");
+          
+    const Alert = ({type}) =>{
+        const success = "success",
+              error = "error",
+              register = "register",
+              mdp = "mdp";
+        
+        if(success === type.split(" ")[0]){
+            if(register === type.split(" ")[1]){
+                return <Success message={"Vous vous êtes inscrit avec succès ! Un mail de confirmation a été envoyé !"}/>
+            }else if(mdp === type.split(" ")[1]){
+                return <Error message={"Une erreur est survenue ! Veillez réessayer ultérieurement !"}/>
+            }
+        }else if(error === type.split(" ")[0]){
+            return <Error message={"Les mots de passe ne correspondent pas !"}/>
+        }else{
+            return null;
+        }
+    }      
     const sendRegister = (e) =>{
         e.preventDefault();
         if(password === confPassword){
             auth.createUserWithEmailAndPassword(email,password)
             .then((userCredential)=>{
-                console.log(userCredential)
-            }).catch(console.error)
+                setype("success register")
+                document.querySelector("#email").value = "";
+                document.querySelector("#password").value = "";
+                document.querySelector("#confPassword").value = "";
+            }).catch((err)=>{
+                setype("error register")
+            })
         }else{
-            console.log("not ok")
+            setype("error mdp")
         }
     }
     return (
-        <div id="register" className="w-screen h-full flex flex-col flex-nowrap">
+        <div id="register" className="w-screen h-full flex flex-col flex-nowrap justify-center items-center">
             <div className="text-center h-1/4 flex justify-center items-center">
                 <h1 className="text-6xl">Inscription</h1>
             </div>
+            <Alert type={type}/>
             <form id="formRegister" className="h-3/4" onSubmit={sendRegister}>
                 <div className="h-1/4 w-screen">
                     <div className="h-1/2">
